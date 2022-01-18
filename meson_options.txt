@@ -1,0 +1,2 @@
+option('build_tests', type : 'boolean', value: false, description: 'Build unit tests and static library needed for them')
+option('test_report', type : 'boolean', value: false, description: 'run unit tests with junit report output')
