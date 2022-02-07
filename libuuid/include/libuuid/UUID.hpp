@@ -52,7 +52,20 @@ class UUID {
 	 *
 	 * @param uuid the string representation of the uuid
 	 */
-	UUID(const std::string &uuid) : m_uuid(uuid) {}
+	explicit UUID(const std::string &uuid) : m_uuid(uuid) {}
+
+	/**
+	 * @brief copy constructor
+	 *
+	 */
+	UUID(const UUID &other) : m_uuid(other.m_uuid){};
+
+	/**
+	 * @brief move constructor
+	 *
+	 */
+	UUID(UUID &&other) noexcept : m_uuid(std::move(other.m_uuid)){};
+
 	/**
 	 * @brief check if the uuid is valid
 	 *
@@ -103,5 +116,60 @@ class UUID {
 	 * @return std::string the string representation of the UUID
 	 */
 	const std::string &to_string() const { return m_uuid; }
+
+	/**
+	 * @brief check if the UUID is equal to another UUID
+	 *
+	 * @param other the other UUID
+	 * @return true  if the UUIDs are equal
+	 * @return false  if the UUIDs are not equal
+	 */
+	const bool operator==(const UUID &other) const {
+		return m_uuid == other.m_uuid;
+	}
+	/**
+	 * @brief check if the UUID is empty
+	 *
+	 * @return true  if the UUID is empty
+	 * @return false  if the UUID is not empty
+	 */
+	const bool isEmpty() const { return m_uuid.empty(); }
+
+	/**
+	 * @brief check if the UUID is valid
+	 *
+	 * @return true  if the UUIDs is valid
+	 * @return false  if the UUIDs is not valid
+	 */
+	const bool isValid() const { return is_valid(m_uuid); }
+
+	/**
+	 * @brief check whether the UUID is not empty and valid
+	 *
+	 * @return true  if the UUID is not empty and valid
+	 * @return false  if the UUID is empty or invalid
+	 */
+	operator bool() const { return !isEmpty() && isValid(); }
+
+	/**
+	 * @brief copy assignment operator
+	 *
+	 * @param other the UUID to copy
+	 * @return UUID& the UUID
+	 */
+	UUID &operator=(const UUID &other) {
+		m_uuid = other.m_uuid;
+		return *this;
+	}
+	/**
+	 * @brief move assignment operator
+	 *
+	 * @param other the UUID to move
+	 * @return UUID& the UUID
+	 */
+	UUID &operator=(UUID &&other) noexcept {
+		m_uuid = std::move(other.m_uuid);
+		return *this;
+	}
 };
 } // namespace libUUID
