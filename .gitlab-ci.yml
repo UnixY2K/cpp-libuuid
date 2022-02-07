@@ -83,7 +83,7 @@ test-coverage-job:
   dependencies:
     - build-job
   script:
-    - pacman -Sy gcovr
+    - pacman -Sy --noconfirm gcovr
     - ninja coverage-xml -C builddir
   coverage: /^\s*lines:\s*\d+.\d+\%/
   artifacts:
